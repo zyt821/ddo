@@ -1,0 +1,28 @@
+name: sync-JDDJ-Script
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+  watch:
+    types: started
+  repository_dispatch:
+    types: sync-JDDJ-Script
+jobs:
+  repo-sync:
+    env:
+      PAT: ${{ secrets.ZYT }} 
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: sync-JDDJ-Script
+        uses: repo-sync/github-sync@v2
+        if: env.PAT
+        with:
+          source_repo: "https://github.com/panghu999/panghu.git"
+          source_branch: "main"
+          destination_branch: "sync-JDDJ-Script"
+          github_token: ${{ secrets.ZYT }}
