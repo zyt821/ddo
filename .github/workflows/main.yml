@@ -1,0 +1,28 @@
+name: sync-DDO-Script
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+  watch:
+    types: started
+  repository_dispatch:
+    types: sync-DDO-Script
+jobs:
+  repo-sync:
+    env:
+      PAT: ${{ secrets.ZYT }} 
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: sync-DDO-Script
+        uses: repo-sync/github-sync@v2
+        if: env.PAT
+        with:
+          source_repo: "https://github.com/zyt821/JDDJ.git"
+          source_branch: "main"
+          destination_branch: "sync-DDO-Script"
+          github_token: ${{ secrets.ZYT }}
