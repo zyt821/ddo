@@ -22,7 +22,7 @@ jobs:
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
-          source_repo: "https://github.com/panghu999/panghu.git"
+          source_repo: "https://github.com/passerby-b/JDDJ.git"
           source_branch: "main"
           destination_branch: "sync-JDDJ-Script"
           github_token: ${{ secrets.ZYT }}
